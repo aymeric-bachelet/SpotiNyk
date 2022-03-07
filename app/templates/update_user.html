@@ -6,11 +6,11 @@
         <h1 class="mt-5">Mettre à jour l'utilisateur</h1>
     </div>
     <div class="col text-end">
-        <a class="btn btn-primary" href="{{ url_for('users.index') }}"> Retourner</a>
+        <a class="btn btn-primary" href="{{ url_for('admin.index') }}"> Retourner</a>
     </div>
 </div>
 
-<form action="{{ url_for('users.update', user_id = user.id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ url_for('admin.update', user_id = user.id) }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" name="username" class="form-control" id="inputUsername" value="{{user.username}}">

@@ -14,9 +14,10 @@ bp_default.route("/logout")(default_controller.logout)
 
 # Blueprint Admins:
 
-bp_admin = Blueprint('users', __name__, url_prefix="/users")
+bp_admin = Blueprint('admin', __name__, url_prefix="/admin")
 
 bp_admin.route('/', methods=['GET'])(admin_controller.index)
+bp_admin.route('/users', methods=['GET'])(admin_controller.users)
 bp_admin.route('/create', methods=['GET'])(admin_controller.create)
 bp_admin.route('/store', methods=['POST'])(admin_controller.store)
 bp_admin.route('/<int:user_id>', methods=['GET'])(admin_controller.show)

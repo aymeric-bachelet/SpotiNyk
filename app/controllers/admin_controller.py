@@ -3,9 +3,12 @@ from flask import render_template, request, redirect, url_for, flash
 from app.ext.database import db
 from flask_login import login_required
 
-
 @login_required
 def index():
+    return render_template('admin_home.html')
+
+@login_required
+def users():
     users = User.query.all()
     return render_template('list_users.html', users=users)
 
@@ -23,7 +26,7 @@ def  store():
     db.session.add(new_user)
     db.session.commit()
     flash('Utilisateur enregistré!')
-    return redirect(url_for('users.index'))
+    return redirect(url_for('admin.index'))
 
 @login_required
 def show(user_id):
@@ -39,7 +42,7 @@ def update(user_id):
         user.email = request.form['email']
         db.session.commit()
         flash("L'utilisateur " + user.username + " a été mis à jour") 
-        return redirect(url_for('users.index'))    
+        return redirect(url_for('admin.index'))
 
     return render_template('update_user.html', user = user) 
 
@@ -50,4 +53,4 @@ def destroy(user_id):
         db.session.delete(user)
         db.session.commit()
         flash('User has been deleted!')
-        return redirect(url_for('users.index'))
+        return redirect(url_for('admin.index'))
