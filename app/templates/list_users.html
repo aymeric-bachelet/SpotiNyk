@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Users list{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %} 
+    {% if messages %}
+    <div class="alert alert-primary" role="alert" id="messages">
+        <button type="button" class="btn-close" 
+                aria-label="Close" 
+                onclick="document.getElementById('messages').style.display = 'none';"></button>
+        {{ messages[0] }}
+    </div>
+    {% endif %} 
+{% endwith %}
+
+
+
+    <!-- <div class="alert alert-primary" role="alert">
+        {{message}}
+    </div> -->
+   
+
+
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Liste d'utilisateurs</h1>
+    </div>
+    <div class="col text-end">
+        {# La fonction url_for génère le lien vers une certaine ressource, 
+            comme dans ce cas vers la route d'index du blueprint 'users'#}
+        <a class="btn btn-primary mt-5" href="{{url_for('users.create')}}"> Créer un nouvel utilisateur</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{user.id}}</th>
+            <td class="lead">{{user.username}}</td>
+            <td class="lead">{{user.email}}</td>
+            <td>
+                <form action="{{ url_for('users.destroy', user_id=user.id) }}" 
+                      method="POST">
+
+                    <a href="{{ url_for('users.show', user_id=user.id) }}"
+                        class="btn btn-outline-success"
+                        role="button">
+                            Show
+                    </a>
+                    <a href="{{ url_for('users.update', user_id=user.id) }}"
+                        class="btn btn-outline-primary"
+                        role="button">
+                            Edit
+                    </a>
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

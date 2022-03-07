@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Utilisateur{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Informations sur l'utilisateur</h1>
+    </div>
+    <div class="col text-end">
+        {# La fonction url_for génère le lien vers une certaine ressource, 
+            comme dans ce cas vers la route d'index du blueprint 'users'#}
+        <a class="btn btn-primary mt-5" href="{{url_for('users.index')}}"> Retourner</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col lead">
+        <strong>Username:</strong> {{user.username}}
+    </div>
+</div>
+<div class="row">
+    <div class="col lead">
+        <strong>Email:</strong> {{user.email}}
+    </div>
+</div>
+
+
+    <!-- <p class="lead">{{user.username}} - {{user.email}}</p> -->
+
+{% endblock %}
