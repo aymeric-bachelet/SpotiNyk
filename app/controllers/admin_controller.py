@@ -59,3 +59,34 @@ def destroy(user_id):
 def posts():
     posts = Post.query.all()
     return render_template('list_posts.html', posts=posts)
+
+@login_required
+def createPost():
+    return render_template('create_post.html')
+
+@login_required
+def  storePost():
+
+    return redirect(url_for('admin.index'))
+
+@login_required
+def showPost(post_id):
+    post = Post.query.get(post_id)
+    print(post)
+    return render_template('show_post.html', post=post)
+
+@login_required
+def updatePost(post_id):
+    post = Post.query.get_or_404(post_id)
+
+
+    return render_template('update_post.html', post=post)
+
+@login_required
+def destroyPost(post_id):
+    def destroy(post_id):
+        post = Post.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        flash('Post has been deleted!')
+        return redirect(url_for('admin.index'))

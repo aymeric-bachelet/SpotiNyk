@@ -35,28 +35,29 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
+        <th scope="col">Titre</th>
+        <th scope="col">Date de publication</th>
+        <th scope="col">Catégorie</th>
         <th scope="col">Action</th>
-        <th scope="col">Est admin</th>
       </tr>
     </thead>
     <tbody>
         {% for post in posts %}
         <tr>
-            <th scope="row">{{user.id}}</th>
-            <td class="lead">{{user.username}}</td>
-            <td class="lead">{{user.email}}</td>
+            <th scope="row">{{post.id}}</th>
+            <td class="lead">{{post.title}}</td>
+            <td class="lead">{{post.pub_date}}</td>
+            <td class="lead">{{post.category}}</td>
             <td>
                 <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
                       method="POST">
 
-                    <a href="{{ url_for('admin.showPosts', user_id=user.id) }}"
+                    <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
                         class="btn btn-outline-success"
                         role="button">
                             Show
                     </a>
-                    <a href="{{ url_for('admin.updatePost', user_id=user.id) }}"
+                    <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
                         class="btn btn-outline-primary"
                         role="button">
                             Edit
@@ -65,7 +66,6 @@
                 </form>
 
             </td>
-            <td class="lead">{{user.admin}}</td>
         </tr>
         {% endfor %}
     </tbody>
