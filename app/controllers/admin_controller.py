@@ -66,7 +66,14 @@ def createPost():
 
 @login_required
 def  storePost():
-
+    title=request.values.get('title')
+    body=request.values.get('body')
+    pub_date=request.values.get('pub_date')
+    category=request.values.get('category')
+    new_post = Post(title=title, body=body, pub_date=pub_date, category=category)
+    db.session.add(new_post)
+    db.session.commit()
+    flash('Article enregistré!')
     return redirect(url_for('admin.index'))
 
 @login_required
@@ -78,7 +85,12 @@ def showPost(post_id):
 @login_required
 def updatePost(post_id):
     post = Post.query.get_or_404(post_id)
-
+    if request.method == 'POST':
+        post.title = request.form['title']
+        post.body = request.form['body']
+        db.session.commit()
+        flash("L'article " + post.title + " a été mis à jour")
+        return redirect(url_for('admin.index'))
 
     return render_template('update_post.html', post=post)
 
