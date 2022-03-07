@@ -6,8 +6,10 @@
     {% for post in posts %}
 
         <div>
+            <hr/>
+            <h2>{{post.title}}</h2><p>publié le {{post.pub_date}} </p>
 
-        <h1>{{ post.id }}</h1>
+            <p>{{post.body}}</p>
 
         </div>
 
