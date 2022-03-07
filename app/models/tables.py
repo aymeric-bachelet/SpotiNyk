@@ -7,12 +7,14 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    admin = db.Column(db.BOOLEAN, nullable=False)
 
-    def __init__(self, username, email, password, **kwargs):
+    def __init__(self, username, email, password, admin, **kwargs):
         super(User, self).__init__(**kwargs)
         self.username = username
         self.email = email
         self.password = generate_password_hash(password)
+        self.admin = admin
 
 
     def __repr__(self):
