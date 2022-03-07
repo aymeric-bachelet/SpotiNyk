@@ -54,10 +54,10 @@ class Category(db.Model):
 
 
 class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    idComm = db.Column(db.Integer, primary_key=True)
     commentaire = db.Column(db.String(80), nullable=False)
     idPost = db.Column(db.Integer, nullable=False)
-    idAuthor = db.Column(db.Integer, nullable=False)
+    id_author = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return '<Comment %r>' % self.commentaire
