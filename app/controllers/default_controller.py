@@ -1,12 +1,13 @@
 import flask
-from app.models.tables import User
+from app.models.tables import User, Post
 from app.models.forms import LoginForm
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash
 
 def index():
-    return render_template('index.html')
+    posts = Post.query.all()
+    return render_template('index.html', posts=posts)
 
 def login():
     form = LoginForm()

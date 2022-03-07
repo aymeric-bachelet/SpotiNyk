@@ -5,7 +5,7 @@ from app.controllers import default_controller, admin_controller
 
 bp_default = Blueprint('default',__name__, url_prefix="/")
 
-bp_default.route("/")(default_controller.index)
+bp_default.route("/", methods=['GET'])(default_controller.index)
 bp_default.route("/login", methods=['GET', 'POST'])(default_controller.login)
 bp_default.route("/logout")(default_controller.logout)
 

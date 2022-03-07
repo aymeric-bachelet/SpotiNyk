@@ -1,4 +1,4 @@
-from app.models.tables import User
+from app.models.tables import User, Post
 from flask import render_template, request, redirect, url_for, flash
 from app.ext.database import db
 from flask_login import login_required
@@ -54,3 +54,8 @@ def destroy(user_id):
         db.session.commit()
         flash('User has been deleted!')
         return redirect(url_for('admin.index'))
+
+@login_required
+def posts():
+    posts = Post.query.all()
+    return render_template('list_posts.html', posts=posts)
