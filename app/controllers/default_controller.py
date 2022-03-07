@@ -15,9 +15,6 @@ def login():
         passwd = form.password.data
         user = User.query.filter_by(username=username).first()
         next = flask.request.args.get("next")
-        # print(form.password.data)
-        # print("---")
-        # print(user.password)
         if user and check_password_hash(user.password, passwd):
             login_user(user)
             flash('Logged in successfully.')

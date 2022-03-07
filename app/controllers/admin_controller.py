@@ -18,7 +18,8 @@ def  store():
     username = request.values.get('username')
     email = request.values.get('email')
     password = request.values.get('password')
-    new_user = User(username=username, email=email, password=password)
+    admin = False
+    new_user = User(username=username, email=email, password=password, admin=admin)
     db.session.add(new_user)
     db.session.commit()
     flash('Utilisateur enregistré!')

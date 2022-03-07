@@ -1,5 +1,5 @@
 from flask import Flask
-from app.blueprints.default import bp_default, bp_users
+from app.blueprints.default import bp_default, bp_admin
 from app.ext import database, migration
 from app.ext import appearance
 from app.ext import login
@@ -14,6 +14,6 @@ def create_app():
     login.init_app(app)
 
     app.register_blueprint(bp_default)
-    app.register_blueprint(bp_users)
+    app.register_blueprint(bp_admin)
 
     return app
