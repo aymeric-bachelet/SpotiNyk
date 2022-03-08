@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Ajouter un utilisateur{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Ajouter un nouvel article</h1>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-primary" href="{{ url_for('admin.index') }}"> Retour</a>
+    </div>
+</div>
+
+<form action="{{ url_for('admin.storePost') }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="title" class="form-label">Titre</label>
+        <input type="text" name="title" class="form-control" id="inputTitle">
+    </div>
+    <div class="mb-3">
+        <label for="body" class="form-label">Corp du texte</label>
+        <input type="text" name="body" class="form-control" id="inputBody">
+    </div>
+    <div class="mb-3">
+        <label for="pub_date" class="form-label">Date de publication</label>
+        <input type="date" name="password" class="form-control" id="inputPubDate">
+    </div>
+    <div>
+        <label for="category" class="form-label">Catégorie</label>
+        <select class="form-select" aria-label="Catégorie">
+            <option selected>Open this select menu</option>
+            {% for categorie in categories %}
+                <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+            {% endfor %}
+            <option value="nouvelle">Nouvelle catégorie</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+</form>
+
+{% endblock %}

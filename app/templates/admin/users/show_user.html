@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Articles{% endblock %}
+{% block title %}Utilisateur{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col">
-        <h1 class="mt-5">Informations sur l'article</h1>
+        <h1 class="mt-5">Informations sur l'utilisateur</h1>
     </div>
     <div class="col text-end">
         {# La fonction url_for génère le lien vers une certaine ressource, 
@@ -13,23 +13,20 @@
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Titre : </strong> {{post.title}}
+        <strong>Username:</strong> {{user.username}}
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        {{post.body}}
+        <strong>Email:</strong> {{user.email}}
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Date de publication : </strong> {{post.pub_date}}
+        <strong>est Admin:</strong> {{user.admin}}
     </div>
 </div>
-<div class="row">
-    <div class="col lead">
-        <strong>Catégorie : </strong> {{post.category}}
-    </div>
-</div>
+
+    <!-- <p class="lead">{{user.username}} - {{user.email}}</p> -->
 
 {% endblock %}

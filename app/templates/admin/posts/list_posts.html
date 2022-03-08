@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Posts list{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %} 
+    {% if messages %}
+    <div class="alert alert-primary" role="alert" id="messages">
+        <button type="button" class="btn-close" 
+                aria-label="Close" 
+                onclick="document.getElementById('messages').style.display = 'none';"></button>
+        {{ messages[0] }}
+    </div>
+    {% endif %} 
+{% endwith %}
+
+
+
+    <!-- <div class="alert alert-primary" role="alert">
+        {{message}}
+    </div> -->
+   
+
+
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Liste d'articles</h1>
+    </div>
+    <div class="col text-end">
+        {# La fonction url_for génère le lien vers une certaine ressource, 
+            comme dans ce cas vers la route d'index du blueprint 'users'#}
+        <a class="btn btn-primary mt-5" href="{{url_for('admin.createPost')}}"> Créer un nouvel article</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titre</th>
+        <th scope="col">Date de publication</th>
+        <th scope="col">Catégorie</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <th scope="row">{{post.id}}</th>
+            <td class="lead">{{post.title}}</td>
+            <td class="lead">{{post.pub_date}}</td>
+            <td class="lead">{{post.category}}</td>
+            <td>
+                <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
+                      method="POST">
+
+                    <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
+                        class="btn btn-outline-success"
+                        role="button">
+                            Show
+                    </a>
+                    <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
+                        class="btn btn-outline-primary"
+                        role="button">
+                            Edit
+                    </a>
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -65,12 +65,12 @@ def createPost():
     return render_template('create_post.html')
 
 @login_required
-def  storePost():
+def storePost():
     title=request.values.get('title')
     body=request.values.get('body')
     pub_date=request.values.get('pub_date')
-    category=request.values.get('category')
-    new_post = Post(title=title, body=body, pub_date=pub_date, category=category)
+    id_category=request.values.get('category')
+    new_post = Post(title=title, body=body, pub_date=pub_date, id_category=id_category)
     db.session.add(new_post)
     db.session.commit()
     flash('Article enregistré!')

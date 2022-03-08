@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Articles{% endblock %}
+{% block title %}Utilisateur{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col">
@@ -13,7 +13,7 @@
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Titre : </strong> {{post.title}}
+        <strong>Titre:</strong> {{post.title}}
     </div>
 </div>
 <div class="row">
@@ -23,12 +23,7 @@
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Date de publication : </strong> {{post.pub_date}}
-    </div>
-</div>
-<div class="row">
-    <div class="col lead">
-        <strong>Catégorie : </strong> {{post.category}}
+        <strong>Date de publication</strong> {{post.pub_date}}
     </div>
 </div>
 
