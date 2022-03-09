@@ -6,9 +6,7 @@
         <h1 class="mt-5">Informations sur l'article</h1>
     </div>
     <div class="col text-end">
-        {# La fonction url_for génère le lien vers une certaine ressource, 
-            comme dans ce cas vers la route d'index du blueprint 'users'#}
-        <a class="btn btn-primary mt-5" href="{{url_for('admin.index')}}"> Retourner</a>
+        <a class="btn btn-primary mt-5" href="{{url_for('admin.posts')}}"> Retour</a>
     </div>
 </div>
 <div class="row">
@@ -36,6 +34,28 @@
         <strong>Id catégorie : </strong> {{post.category_id}}
     </div>
 </div>
+<div>
+<strong>Commentaires :</strong>
+    {% for comm in comments %}
+        {% if comm.idPost == post.id %}
+            <p>{{comm.commentaire}}</p>
+        {% endif %}
+    {% endfor %}
+</div>
 
+<form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
+                      method="DELETE">
+    <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
+        class="btn btn-outline-success"
+        role="button">
+            Show
+    </a>
+    <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
+        class="btn btn-outline-primary"
+        role="button">
+            Edit
+    </a>
+    <button type="submit" class="btn btn-outline-danger">Delete</button>
+</form>
 
 {% endblock %}

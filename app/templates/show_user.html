@@ -8,7 +8,7 @@
     <div class="col text-end">
         {# La fonction url_for génère le lien vers une certaine ressource, 
             comme dans ce cas vers la route d'index du blueprint 'users'#}
-        <a class="btn btn-primary mt-5" href="{{url_for('admin.index')}}"> Retourner</a>
+        <a class="btn btn-primary mt-5" href="{{url_for('admin.users')}}"> Retour</a>
     </div>
 </div>
 <div class="row">
@@ -26,7 +26,20 @@
         <strong>est Admin:</strong> {{user.admin}}
     </div>
 </div>
-
+<form action="{{ url_for('admin.destroy', user_id=user.id) }}"
+                      method="POST">
+    <a href="{{ url_for('admin.show', user_id=user.id) }}"
+        class="btn btn-outline-success"
+        role="button">
+            Show
+    </a>
+    <a href="{{ url_for('admin.update', user_id=user.id) }}"
+        class="btn btn-outline-primary"
+        role="button">
+            Edit
+    </a>
+    <button type="submit" class="btn btn-outline-danger">Delete</button>
+</form>
     <!-- <p class="lead">{{user.username}} - {{user.email}}</p> -->
 
 {% endblock %}

@@ -50,7 +50,7 @@
             <td class="lead">{{post.category}}</td>
             <td>
                 <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
-                      method="POST">
+                      method="DELETE">
 
                     <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
                         class="btn btn-outline-success"
