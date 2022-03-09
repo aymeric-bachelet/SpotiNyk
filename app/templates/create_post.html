@@ -20,8 +20,12 @@
         <input type="text" name="body" class="form-control" id="inputBody">
     </div>
     <div class="mb-3">
-        <label for="category" class="form-label">Corps de l'article : </label>
-        <input type="number" name="category" class="form-control" id="inputCategory">
+        <label for="category_id" class="form-label">Catégorie : </label>
+        <select name="category_id" class="form-select" id="inputCategoryId">
+            {% for category in categorys %}
+                <option value='{{category.id}}'>{{category.name}}</option>
+            {% endfor %}
+        </select>
     </div>
 
     <button type="submit" class="btn btn-success">Valider</button>

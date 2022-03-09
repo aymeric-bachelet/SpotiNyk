@@ -1,4 +1,4 @@
-from app.models.tables import User, Post
+from app.models.tables import User, Post, Category
 from flask import render_template, request, redirect, url_for, flash
 from app.ext.database import db
 from flask_login import login_required
@@ -26,7 +26,7 @@ def  store():
     db.session.add(new_user)
     db.session.commit()
     flash('Utilisateur enregistré!')
-    return redirect(url_for('admin.index'))
+    return redirect(url_for('admin.users'))
 
 @login_required
 def show(user_id):
@@ -42,7 +42,7 @@ def update(user_id):
         user.email = request.form['email']
         db.session.commit()
         flash("L'utilisateur " + user.username + " a été mis à jour") 
-        return redirect(url_for('admin.index'))
+        return redirect(url_for('admin.users'))
 
     return render_template('update_user.html', user = user) 
 
@@ -53,7 +53,7 @@ def destroy(user_id):
         db.session.delete(user)
         db.session.commit()
         flash('User has been deleted!')
-        return redirect(url_for('admin.index'))
+        return redirect(url_for('admin.users'))
 
 @login_required
 def posts():
@@ -62,19 +62,20 @@ def posts():
 
 @login_required
 def createPost():
-    return render_template('create_post.html')
+    categorys = Category.query.all()
+    return render_template('create_post.html', categorys=categorys)
 
 @login_required
 def storePost():
     title=request.values.get('title')
     body=request.values.get('body')
     pub_date=request.values.get('pub_date')
-    id_category=request.values.get('category')
-    new_post = Post(title=title, body=body, pub_date=pub_date, id_category=id_category)
+    category_id=int(request.values.get('category_id'))
+    new_post = Post(title=title, body=body, pub_date=pub_date, category_id=category_id)
     db.session.add(new_post)
     db.session.commit()
     flash('Article enregistré!')
-    return redirect(url_for('admin.index'))
+    return redirect(url_for('admin.posts'))
 
 @login_required
 def showPost(post_id):
@@ -85,20 +86,20 @@ def showPost(post_id):
 @login_required
 def updatePost(post_id):
     post = Post.query.get_or_404(post_id)
+    categorys = Category.query.all()
     if request.method == 'POST':
         post.title = request.form['title']
         post.body = request.form['body']
         db.session.commit()
         flash("L'article " + post.title + " a été mis à jour")
-        return redirect(url_for('admin.index'))
+        return redirect(url_for('admin.posts'))
 
-    return render_template('update_post.html', post=post)
+    return render_template('update_post.html', post=post, categorys=categorys)
 
 @login_required
 def destroyPost(post_id):
-    def destroy(post_id):
-        post = Post.query.get_or_404(post_id)
-        db.session.delete(post)
-        db.session.commit()
-        flash('Post has been deleted!')
-        return redirect(url_for('admin.index'))
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post has been deleted!')
+    return redirect(url_for('admin.posts'))
