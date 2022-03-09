@@ -16,12 +16,11 @@
 
             <h4>Commentaires :</h4>
             {% for comm in comments %}
-
-                {% if comm.idPost == post.id %}
+                {% if comm.post_id == post.id %}
                     <hr/>
+                    <strong>{{comm.user}}</strong>
                     <p>{{comm.commentaire}}</p>
                 {% endif %}
-
             {% endfor %}
             <hr/>
             <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">

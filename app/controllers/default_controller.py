@@ -9,7 +9,7 @@ from app.ext.database import db
 def index():
     posts = Post.query.all()
     comments = Comment.query.all()
-    return render_template('index.html', posts=posts,comments=comments)
+    return render_template('index.html', posts=posts, comments=comments)
 
 def login():
     form = LoginForm()

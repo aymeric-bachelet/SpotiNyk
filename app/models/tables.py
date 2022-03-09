@@ -56,8 +56,9 @@ class Category(db.Model):
 class Comment(db.Model):
     idComm = db.Column(db.Integer, primary_key=True)
     commentaire = db.Column(db.String(80), nullable=False)
-    idPost = db.Column(db.Integer, nullable=False)
-    id_author = db.Column(db.Integer, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('comments', lazy=True))
 
     def __repr__(self):
         return '<Comment %r>' % self.commentaire
