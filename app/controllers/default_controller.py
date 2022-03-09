@@ -36,7 +36,7 @@ def logout():
 
 @login_required
 def storeComment():
-    idPost = request.values.get('idPost')
+    idPost = int(request.values.get('idPost'))
     commentaire = request.values.get('commentaire')
     id_author = current_user.id
     new_comment = Comment(idPost=idPost, commentaire=commentaire, id_author=id_author)

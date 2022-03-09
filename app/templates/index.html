@@ -24,8 +24,8 @@
 
             {% endfor %}
             <hr/>
-            <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data" idPost="{{post.id}}">
-                <label for="commentaire" class="form-label">Commentaire : </label>
+            <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="idPost" value="{{post.id}}">
                 <input type="text" name="commentaire" class="form-control" id="inputCommentaire">
                 <button type="submit" class="btn btn-success">Commenter</button>
             </form>
