@@ -34,20 +34,17 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{url_for('default.index')}}"> <i class="bi bi-house"></i></a>
                     </li>
+                    {% if current_user.admin %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('admin.index')}}">User</a>
+                        <a class="nav-link" href="{{url_for('admin.users')}}">Utilisateurs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('default.login')}}">Login</a>
+                        <a class="nav-link" href="{{url_for('admin.posts')}}">Articles</a>
                     </li>
+                    {%endif%}
                     </ul>
-
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    {% if current_user.is_authenticated %}
                     <ul class="navbar-nav mr-auto me-5 ms-2 mb-md-0">
+                        {% if current_user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               {{current_user.username}}
@@ -57,8 +54,13 @@
                               <li><a class="dropdown-item" href="{{url_for('default.logout')}}">Logout</a></li>
                             </ul>
                         </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('default.login')}}">Login</a>
+                        </li>
+                        {%endif%}
                     </ul>
-                    {%endif%}
+
                    
                 </div>
                 </div>

@@ -20,7 +20,7 @@ def login():
         if user and check_password_hash(user.password, passwd):
             login_user(user)
             flash('Logged in successfully.')
-            print("next: " + next)
+            #print("next: " + next)
         else:
             flash('Invalid login.')
             print("invalid login")
