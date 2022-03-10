@@ -18,7 +18,7 @@ class User(db.Model):
 
 
     def __repr__(self):
-        return '<User %r >' % self.username 
+        return '%r' % self.username
 
     def is_authenticated(self):
         return True
@@ -50,7 +50,7 @@ class Category(db.Model):
     name = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
-        return '<Category %r>' % self.name
+        return '%r' % self.name
 
 
 class Comment(db.Model):
