@@ -11,10 +11,10 @@ def index():
     posts = Post.query.all()
     comments = Comment.query.all()
     category = request.values.get('category')
-    if category != "aucun" :
-        category_id = int(category)
-    else :
+    if category is None or category == "" :
         category_id = None
+    else :
+        category_id = int(catégorie)
 
     return render_template('index.html', posts=posts, comments=comments, categorys=categorys, category_id=category_id)
 
