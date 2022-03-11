@@ -1,5 +1,5 @@
 import flask
-from app.models.tables import User, Post, Comment
+from app.models.tables import User, Post, Comment, Category
 from app.models.forms import LoginForm
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -7,9 +7,16 @@ from werkzeug.security import check_password_hash
 from app.ext.database import db
 
 def index():
+    categorys = Category.query.all()
     posts = Post.query.all()
     comments = Comment.query.all()
-    return render_template('index.html', posts=posts, comments=comments)
+    category = request.values.get('category')
+    if category != "aucun" :
+        category_id = int(category)
+    else :
+        category_id = None
+
+    return render_template('index.html', posts=posts, comments=comments, categorys=categorys, category_id=category_id)
 
 def login():
     form = LoginForm()
