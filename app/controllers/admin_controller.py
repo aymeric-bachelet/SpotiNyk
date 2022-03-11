@@ -71,6 +71,9 @@ def storePost():
     body=request.values.get('body')
     pub_date=request.values.get('pub_date')
     category_id=int(request.values.get('category_id'))
+    category=request.values.get('category')
+    if None != category:
+        category_id = storeCategory(category)
     new_post = Post(title=title, body=body, pub_date=pub_date, category_id=category_id)
     db.session.add(new_post)
     db.session.commit()
@@ -103,3 +106,11 @@ def destroyPost(post_id):
     db.session.commit()
     flash('Post has been deleted!')
     return redirect(url_for('admin.posts'))
+
+@login_required
+def storeCategory(category) -> int :
+    new_category = Category(name=category)
+    db.session.add(new_category)
+    db.session.commit()
+    flash('Catégorie enregistrée !')
+    return new_category.id

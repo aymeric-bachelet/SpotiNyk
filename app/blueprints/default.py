@@ -29,3 +29,5 @@ bp_admin.route('/posts/store', methods=['POST'])(admin_controller.storePost)
 bp_admin.route('/posts/show/<int:post_id>', methods=['GET'])(admin_controller.showPost)
 bp_admin.route('/posts/<int:post_id>/edit', methods=['GET', 'POST'])(admin_controller.updatePost)
 bp_admin.route('/posts/delete/<int:post_id>', methods=['GET'])(admin_controller.destroyPost)
+
+bp_admin.route('/category/store', methods=['POST'])(admin_controller.storeCategory)
