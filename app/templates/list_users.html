@@ -58,6 +58,13 @@
             <td class="lead">
                 {% if user.admin %}
                     <i class="bi bi-check-circle"></i>
+                {% else %}
+                    <form action="{{ url_for('admin.update', user_id = user.id) }}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="username" id="inputUsername" value="{{user.username}}">
+                        <input type="hidden" name="email" id="inputEmail" value="{{user.email}}">
+                        <input type="hidden" name="admin" id="inputAdmin1" value="True">
+                        <button type="submit" class="btn btn-success">Promouvoir</button>
+                    </form>
                 {% endif %}
             </td>
         </tr>

@@ -41,6 +41,11 @@ def update(user_id):
     if request.method == 'POST':
         user.username = request.form['username']
         user.email = request.form['email']
+        admin = request.form['admin']
+        if admin == "True" :
+            user.admin = True
+        else :
+            user.admin = False
         db.session.commit()
         flash("L'utilisateur " + user.username + " a été mis à jour") 
         return redirect(url_for('admin.users'))
