@@ -12,33 +12,23 @@
     {% endif %} 
 {% endwith %}
 
-
-
-    <!-- <div class="alert alert-primary" role="alert">
-        {{message}}
-    </div> -->
-   
-
-
 <div class="row">
     <div class="col">
         <h1 class="mt-5">Liste d'utilisateurs</h1>
     </div>
     <div class="col text-end">
-        {# La fonction url_for génère le lien vers une certaine ressource, 
-            comme dans ce cas vers la route d'index du blueprint 'users'#}
         <a class="btn btn-primary mt-5" href="{{url_for('admin.create')}}"> Créer un nouvel utilisateur</a>
     </div>
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped" style="text-align: center">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Username</th>
+        <th scope="col">Identifiant</th>
         <th scope="col">Email</th>
-        <th scope="col">Action</th>
-        <th scope="col">Est admin</th>
+        <th scope="col">Actions</th>
+        <th scope="col">Administrateur</th>
       </tr>
     </thead>
     <tbody>
@@ -49,23 +39,27 @@
             <td class="lead">{{user.email}}</td>
             <td>
                 <form action="{{ url_for('admin.destroy', user_id=user.id) }}"
-                      method="POST">
+                      method="GET">
 
                     <a href="{{ url_for('admin.show', user_id=user.id) }}"
                         class="btn btn-outline-success"
                         role="button">
-                            Show
+                            Informations
                     </a>
                     <a href="{{ url_for('admin.update', user_id=user.id) }}"
                         class="btn btn-outline-primary"
                         role="button">
-                            Edit
+                            Modifier
                     </a>
-                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    <button type="submit" class="btn btn-outline-danger">Supprimer</button>
                 </form>
 
             </td>
-            <td class="lead">{{user.admin}}</td>
+            <td class="lead">
+                {% if user.admin %}
+                    <i class="bi bi-check-circle"></i>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

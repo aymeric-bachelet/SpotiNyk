@@ -11,10 +11,10 @@ def index():
     posts = Post.query.all()
     comments = Comment.query.all()
     category = request.values.get('category')
-    if category is None or category == "" :
+    if category is None or category =="":
         category_id = None
     else :
-        category_id = int(catégorie)
+        category_id = int(category)
 
     return render_template('index.html', posts=posts, comments=comments, categorys=categorys, category_id=category_id)
 
@@ -37,16 +37,17 @@ def login():
         
     return render_template("login.html", form = form)
 
+
 def logout():
     logout_user()
     return redirect('/')
 
 @login_required
 def storeComment():
-    idPost = int(request.values.get('idPost'))
+    post_id = int(request.values.get('idPost'))
     commentaire = request.values.get('commentaire')
-    id_author = current_user.id
-    new_comment = Comment(idPost=idPost, commentaire=commentaire, id_author=id_author)
+    user_id = current_user.id
+    new_comment = Comment(post_id=post_id, commentaire=commentaire, user_id=user_id)
     db.session.add(new_comment)
     db.session.commit()
     flash('Commentaire enregistré!')

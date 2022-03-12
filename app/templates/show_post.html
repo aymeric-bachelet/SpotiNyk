@@ -11,51 +11,56 @@
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Titre : </strong> {{post.title}}
+        <h2><strong>Titre : </strong> {{post.title}}</h2>
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        {{post.body}}
+        <p>{{post.body}}</p>
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Date de publication : </strong> {{post.pub_date}}
+        <p><strong>Date de publication : </strong> {{post.pub_date}}</p>
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Catégorie : </strong> {{post.category}}
-    </div>
-</div>
-<div class="row">
-    <div class="col lead">
-        <strong>Id catégorie : </strong> {{post.category_id}}
+        <p><strong>Catégorie : </strong> {{post.category}}</p>
     </div>
 </div>
 <div>
-<strong>Commentaires :</strong>
-    {% for comm in comments %}
-        {% if comm.idPost == post.id %}
-            <p>{{comm.commentaire}}</p>
+    <h3>Commentaires :</h3>
+    {% for comment in comments %}
+        {% if comment.post_id == post.id %}
+            <div class="row" style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
+                <div class="col">
+                    <p style="padding-left: 15px; margin: 3px"><strong>{{comment.user}}</strong> : {{comment.commentaire}}</p>
+                </div>
+                <div class="col text-end">
+                    <form action="{{ url_for('admin.destroyCommentPost', comment_id=comment.idComm) }}"
+                                        method="GET">
+                        <a href="{{ url_for('admin.show', user_id=comment.user_id) }}"
+                            class="btn btn-outline-success"
+                            role="button">
+                                Voir l'utilisateur
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
         {% endif %}
     {% endfor %}
 </div>
-
+<h3>Actions : </h3>
 <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
-                      method="DELETE">
-    <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
-        class="btn btn-outline-success"
-        role="button">
-            Show
-    </a>
+                      method="GET">
     <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
         class="btn btn-outline-primary"
         role="button">
-            Edit
+            Modifier l'article
     </a>
-    <button type="submit" class="btn btn-outline-danger">Delete</button>
+    <button type="submit" class="btn btn-outline-danger">Supprimer l'article</button>
 </form>
 
 {% endblock %}

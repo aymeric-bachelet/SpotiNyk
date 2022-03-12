@@ -2,9 +2,9 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <form action="{{ url_for('default.index') }}" method="GET" enctype="multipart/form-data">
-            <button type="submit" class="btn btn-success" value="aucun" name="category">Tout</button>
+            <button type="submit" class="btn btn-secondary" name="category">Tout</button>
         {% for category in categorys %}
-            <button type="submit" class="btn btn-success" value="{{category.id}}" name="category">{{category.name}}</button>
+            <button type="submit" class="btn btn-secondary" value="{{category.id}}" name="category">{{category.name}}</button>
         {% endfor %}
     </form>
     {% for post in posts %}
@@ -24,13 +24,15 @@
                         </div>
                     {% endif %}
                 {% endfor %}
-                <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="idPost" value="{{post.id}}">
-                        <div style="display: flex;">
-                            <input type="text" name="commentaire" class="form-control" id="inputCommentaire" style="margin-right: 10px;">
-                            <button type="submit" class="btn btn-primary">Commenter</button>
-                        </div>
-                </form>
+                {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="idPost" value="{{post.id}}">
+                            <div style="display: flex;">
+                                <input type="text" name="commentaire" class="form-control" id="inputCommentaire" style="margin-right: 10px;">
+                                <button type="submit" class="btn btn-primary">Commenter</button>
+                            </div>
+                    </form>
+                {% endif %}
            </div>
         </div>
     {% endif %}

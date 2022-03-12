@@ -1,4 +1,4 @@
-from app.models.tables import User, Post, Category
+from app.models.tables import User, Post, Category, Comment
 from flask import render_template, request, redirect, url_for, flash
 from app.ext.database import db
 from flask_login import login_required
@@ -31,8 +31,9 @@ def  store():
 @login_required
 def show(user_id):
     user = User.query.get(user_id)
+    comments = Comment.query.all()
     print(user)
-    return render_template('show_user.html', user = user)
+    return render_template('show_user.html', user = user, comments=comments)
 
 @login_required
 def update(user_id):
@@ -48,12 +49,15 @@ def update(user_id):
 
 @login_required
 def destroy(user_id):
-    def destroy(user_id):
-        user = User.query.get_or_404(user_id)
-        db.session.delete(user)
-        db.session.commit()
-        flash('User has been deleted!')
-        return redirect(url_for('admin.users'))
+    comments = Comment.query.all()
+    for comment in comments:
+        if comment.user_id == user_id:
+            destroyCommentUser(comment.idComm)
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User has been deleted!')
+    return redirect(url_for('admin.users'))
 
 @login_required
 def posts():
@@ -83,8 +87,9 @@ def storePost():
 @login_required
 def showPost(post_id):
     post = Post.query.get(post_id)
+    comments = Comment.query.all()
     print(post)
-    return render_template('show_post.html', post=post)
+    return render_template('show_post.html', post=post, comments=comments)
 
 @login_required
 def updatePost(post_id):
@@ -101,6 +106,10 @@ def updatePost(post_id):
 
 @login_required
 def destroyPost(post_id):
+    comments = Comment.query.all()
+    for comment in comments :
+        if comment.post_id == post_id :
+            destroyCommentPost(comment.idComm)
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
@@ -114,3 +123,19 @@ def storeCategory(category) -> int :
     db.session.commit()
     flash('Catégorie enregistrée !')
     return new_category.id
+
+@login_required
+def destroyCommentUser(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment has been deleted!')
+    return redirect(url_for('admin.show', user_id=comment.user_id))
+
+@login_required
+def destroyCommentPost(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment has been deleted!')
+    return redirect(url_for('admin.showPost', post_id=comment.post_id))

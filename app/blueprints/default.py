@@ -31,3 +31,6 @@ bp_admin.route('/posts/<int:post_id>/edit', methods=['GET', 'POST'])(admin_contr
 bp_admin.route('/posts/delete/<int:post_id>', methods=['GET'])(admin_controller.destroyPost)
 
 bp_admin.route('/category/store', methods=['POST'])(admin_controller.storeCategory)
+
+bp_admin.route('/comments/delete/<int:comment_id>', methods=['GET'])(admin_controller.destroyCommentUser)
+bp_admin.route('/comments/delete/<int:comment_id>', methods=['GET'])(admin_controller.destroyCommentPost)

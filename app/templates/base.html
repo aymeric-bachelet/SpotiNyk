@@ -50,13 +50,12 @@
                               {{current_user.username}}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <li><a class="dropdown-item" href="{{ url_for('admin.show', user_id=current_user.id) }}">Info</a></li>
-                              <li><a class="dropdown-item" href="{{url_for('default.logout')}}">Deconnexion</a></li>
+                              <li><a class="dropdown-item" href="{{url_for('default.logout')}}">Se déconnecter</a></li>
                             </ul>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('default.login')}}">Connexion</a>
+                            <a class="nav-link" href="{{url_for('default.login')}}">Se connecter</a>
                         </li>
                         {%endif%}
                     </ul>

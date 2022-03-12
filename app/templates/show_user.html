@@ -6,40 +6,55 @@
         <h1 class="mt-5">Informations sur l'utilisateur</h1>
     </div>
     <div class="col text-end">
-        {# La fonction url_for génère le lien vers une certaine ressource, 
-            comme dans ce cas vers la route d'index du blueprint 'users'#}
         <a class="btn btn-primary mt-5" href="{{url_for('admin.users')}}"> Retour</a>
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Pseudo:</strong> {{user.username}}
+        <h2><strong>Identifiant : </strong> {{user.username}}
+        {% if user.admin %}
+            <span class="badge rounded-pill bg-primary">Administrateur</span>
+        {% endif %}
+        </h2>
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        <strong>Mail:</strong> {{user.email}}
+        <p><strong>Mail:</strong> {{user.email}}</p>
     </div>
 </div>
-<div class="row">
-    <div class="col lead">
-        <strong>est Admin:</strong> {{user.admin}}
-    </div>
+<div>
+    <h3>Commentaires :</h3>
+    {% for comment in comments %}
+        {% if comment.user_id == user.id %}
+            <div class="row" style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
+                <div class="col">
+                    <p style="padding-left: 15px; margin: 3px"><strong>{{comment.post}}</strong> : {{comment.commentaire}}</p>
+                </div>
+                <div class="col text-end">
+                    <form action="{{ url_for('admin.destroyCommentUser', comment_id=comment.idComm) }}"
+                                        method="GET">
+                        <a href="{{ url_for('admin.showPost', post_id=comment.post_id) }}"
+                            class="btn btn-outline-success"
+                            role="button">
+                                Voir l'article
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
 </div>
+<h3>Actions : </h3>
 <form action="{{ url_for('admin.destroy', user_id=user.id) }}"
-                      method="POST">
-    <a href="{{ url_for('admin.show', user_id=user.id) }}"
-        class="btn btn-outline-success"
-        role="button">
-            Show
-    </a>
+                      method="GET">
     <a href="{{ url_for('admin.update', user_id=user.id) }}"
         class="btn btn-outline-primary"
         role="button">
-            Edit
+            Modifier l'utilisateur
     </a>
-    <button type="submit" class="btn btn-outline-danger">Delete</button>
+    <button type="submit" class="btn btn-outline-danger">Supprimer l'utilisateur</button>
 </form>
-    <!-- <p class="lead">{{user.username}} - {{user.email}}</p> -->
 
 {% endblock %}
