@@ -9,7 +9,7 @@
         <a class="btn btn-primary" href="{{ url_for('admin.users') }}"> Retour</a>
     </div>
 </div>
-
+<!-- Formulaire de mise a jour de l'utilisateur -->
 <form action="{{ url_for('admin.update', user_id = user.id) }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -30,7 +30,6 @@
             <label class="form-check-label" for="inlineRadio2">Non</label>
         </div>
     </div>
-
     <button type="submit" class="btn btn-success">Valider</button>
 </form>
 

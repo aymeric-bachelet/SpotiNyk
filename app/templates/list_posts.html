@@ -3,6 +3,7 @@
 {% block content %}
 {% with messages = get_flashed_messages() %} 
     {% if messages %}
+    <!-- messages pop-up -->
     <div class="alert alert-primary" role="alert" id="messages">
         <button type="button" class="btn-close" 
                 aria-label="Close" 
@@ -11,14 +12,6 @@
     </div>
     {% endif %} 
 {% endwith %}
-
-
-
-    <!-- <div class="alert alert-primary" role="alert">
-        {{message}}
-    </div> -->
-   
-
 
 <div class="row">
     <div class="col">
@@ -30,45 +23,44 @@
         <a class="btn btn-primary mt-5" href="{{url_for('admin.createPost')}}"> Créer un nouvel article</a>
     </div>
 </div>
-
+<!-- Tableau de tous les articles -->
 <table class="table table-striped" style="text-align: center">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titre</th>
-        <th scope="col">Date de publication</th>
-        <th scope="col">Catégorie</th>
-        <th scope="col">Actions</th>
-      </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Date de publication</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Actions</th>
+        </tr>
     </thead>
     <tbody>
         {% for post in posts %}
-        <tr>
-            <th scope="row">{{post.id}}</th>
-            <td class="lead">{{post.title}}</td>
-            <td class="lead">{{post.pub_date}}</td>
-            <td class="lead">{{post.category}}</td>
-            <td>
-                <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
-                      method="GET">
-
-                    <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
-                        class="btn btn-outline-success"
-                        role="button">
-                            Informations
-                    </a>
-                    <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
-                        class="btn btn-outline-primary"
-                        role="button">
-                            Modifier
-                    </a>
-                    <button type="submit" class="btn btn-outline-danger">Supprimer</button>
-                </form>
-
-            </td>
-        </tr>
+            <tr>
+                <th scope="row">{{post.id}}</th>
+                <td class="lead">{{post.title}}</td>
+                <td class="lead">{{post.pub_date}}</td>
+                <td class="lead">{{post.category}}</td>
+                <td>
+                    <!-- Actions possibles -->
+                    <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
+                          method="GET">
+                        <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
+                            class="btn btn-outline-success"
+                            role="button">
+                                Informations
+                        </a>
+                        <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
+                            class="btn btn-outline-primary"
+                            role="button">
+                                Modifier
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
         {% endfor %}
     </tbody>
-  </table>
+</table>
 
 {% endblock %}

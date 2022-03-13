@@ -9,6 +9,7 @@
         <a class="btn btn-primary mt-5" href="{{url_for('admin.posts')}}"> Retour</a>
     </div>
 </div>
+<!-- Affichage des informations de l'article -->
 <div class="row">
     <div class="col lead">
         <h2><strong>Titre : </strong> {{post.title}}</h2>
@@ -29,6 +30,7 @@
         <p><strong>Catégorie : </strong> {{post.category}}</p>
     </div>
 </div>
+<!-- Affichage des commentaires de l'article -->
 <div>
     <h3>Commentaires :</h3>
     {% for comment in comments %}
@@ -45,6 +47,7 @@
                             role="button">
                                 Voir l'utilisateur
                         </a>
+                        <!-- Supprimer le commentaire -->
                         <button type="submit" class="btn btn-outline-danger">Supprimer</button>
                     </form>
                 </div>
@@ -52,6 +55,7 @@
         {% endif %}
     {% endfor %}
 </div>
+<!-- Actions possibles -->
 <h3>Actions : </h3>
 <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
                       method="GET">

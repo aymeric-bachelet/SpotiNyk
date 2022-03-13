@@ -7,6 +7,10 @@ from flask_login import login_required
 def index():
     return render_template('index.html')
 
+# ------------------------------------------------------
+#               Controllers Users
+# ------------------------------------------------------
+
 @login_required
 def users():
     users = User.query.all()
@@ -65,6 +69,18 @@ def destroy(user_id):
     return redirect(url_for('admin.users'))
 
 @login_required
+def destroyCommentUser(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment has been deleted!')
+    return redirect(url_for('admin.show', user_id=comment.user_id))
+
+# ------------------------------------------------------
+#               Controllers Posts
+# ------------------------------------------------------
+
+@login_required
 def posts():
     posts = Post.query.all()
     return render_template('list_posts.html', posts=posts)
@@ -79,9 +95,11 @@ def storePost():
     title=request.values.get('title')
     body=request.values.get('body')
     pub_date=request.values.get('pub_date')
-    category_id=int(request.values.get('category_id'))
+    category_id=request.values.get('category_id')
+    if category_id is not None :
+        category_id = int(category_id)
     category=request.values.get('category')
-    if None != category:
+    if category is not None and category != "":
         category_id = storeCategory(category)
     new_post = Post(title=title, body=body, pub_date=pub_date, category_id=category_id)
     db.session.add(new_post)
@@ -103,6 +121,13 @@ def updatePost(post_id):
     if request.method == 'POST':
         post.title = request.form['title']
         post.body = request.form['body']
+        category_id = request.form['category_id']
+        if category_id is not None:
+            category_id = int(category_id)
+        category = request.form['category']
+        if category is not None and category != "":
+            category_id = storeCategory(category)
+        post.category_id = category_id
         db.session.commit()
         flash("L'article " + post.title + " a été mis à jour")
         return redirect(url_for('admin.posts'))
@@ -122,25 +147,21 @@ def destroyPost(post_id):
     return redirect(url_for('admin.posts'))
 
 @login_required
-def storeCategory(category) -> int :
-    new_category = Category(name=category)
-    db.session.add(new_category)
-    db.session.commit()
-    flash('Catégorie enregistrée !')
-    return new_category.id
-
-@login_required
-def destroyCommentUser(comment_id):
-    comment = Comment.query.get_or_404(comment_id)
-    db.session.delete(comment)
-    db.session.commit()
-    flash('Comment has been deleted!')
-    return redirect(url_for('admin.show', user_id=comment.user_id))
-
-@login_required
 def destroyCommentPost(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     db.session.delete(comment)
     db.session.commit()
     flash('Comment has been deleted!')
     return redirect(url_for('admin.showPost', post_id=comment.post_id))
+
+# ------------------------------------------------------
+#               Controllers Category
+# ------------------------------------------------------
+
+@login_required
+def storeCategory(category) -> int :
+    new_category = Category(name=category)
+    db.session.add(new_category)
+    db.session.commit()
+    flash('Catégorie enregistrée !')
+    return new_category.id

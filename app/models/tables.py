@@ -2,6 +2,9 @@ from app.ext.database import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 
+# ------------------------------------------------------
+#                      Model User
+# ------------------------------------------------------
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -15,7 +18,6 @@ class User(db.Model):
         self.email = email
         self.password = generate_password_hash(password)
         self.admin = admin
-
 
     def __repr__(self):
         return '%r' % self.username
@@ -32,18 +34,24 @@ class User(db.Model):
     def get_id(self):         
         return str(self.id)    
 
+# ------------------------------------------------------
+#                      Model Post
+# ------------------------------------------------------
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     body = db.Column(db.Text, nullable=False)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
-    
     category = db.relationship('Category', backref=db.backref('posts', lazy=True))
 
     def __repr__(self):
         return '<Post %r>' % self.title
 
+# ------------------------------------------------------
+#                      Model Category
+# ------------------------------------------------------
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +60,9 @@ class Category(db.Model):
     def __repr__(self):
         return '%r' % self.name
 
+# ------------------------------------------------------
+#                      Model Comment
+# ------------------------------------------------------
 
 class Comment(db.Model):
     idComm = db.Column(db.Integer, primary_key=True)

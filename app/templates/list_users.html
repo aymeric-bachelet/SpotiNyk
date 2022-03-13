@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Users list{% endblock %}
 {% block content %}
-{% with messages = get_flashed_messages() %} 
+{% with messages = get_flashed_messages() %}
+    <!-- messages pop-up -->
     {% if messages %}
-    <div class="alert alert-primary" role="alert" id="messages">
-        <button type="button" class="btn-close" 
-                aria-label="Close" 
-                onclick="document.getElementById('messages').style.display = 'none';"></button>
-        {{ messages[0] }}
-    </div>
-    {% endif %} 
+        <div class="alert alert-primary" role="alert" id="messages">
+            <button type="button" class="btn-close"
+                    aria-label="Close"
+                    onclick="document.getElementById('messages').style.display = 'none';"></button>
+            {{ messages[0] }}
+        </div>
+    {% endif %}
 {% endwith %}
 
 <div class="row">
@@ -20,56 +21,56 @@
         <a class="btn btn-primary mt-5" href="{{url_for('admin.create')}}"> Créer un nouvel utilisateur</a>
     </div>
 </div>
-
+<!-- tableau de tous les utilisateurs -->
 <table class="table table-striped" style="text-align: center">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Identifiant</th>
-        <th scope="col">Email</th>
-        <th scope="col">Actions</th>
-        <th scope="col">Administrateur</th>
-      </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Identifiant</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+            <th scope="col">Administrateur</th>
+        </tr>
     </thead>
     <tbody>
         {% for user in users %}
-        <tr>
-            <th scope="row">{{user.id}}</th>
-            <td class="lead">{{user.username}}</td>
-            <td class="lead">{{user.email}}</td>
-            <td>
-                <form action="{{ url_for('admin.destroy', user_id=user.id) }}"
-                      method="GET">
-
-                    <a href="{{ url_for('admin.show', user_id=user.id) }}"
-                        class="btn btn-outline-success"
-                        role="button">
-                            Informations
-                    </a>
-                    <a href="{{ url_for('admin.update', user_id=user.id) }}"
-                        class="btn btn-outline-primary"
-                        role="button">
-                            Modifier
-                    </a>
-                    <button type="submit" class="btn btn-outline-danger">Supprimer</button>
-                </form>
-
-            </td>
-            <td class="lead">
-                {% if user.admin %}
-                    <i class="bi bi-check-circle"></i>
-                {% else %}
-                    <form action="{{ url_for('admin.update', user_id = user.id) }}" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="username" id="inputUsername" value="{{user.username}}">
-                        <input type="hidden" name="email" id="inputEmail" value="{{user.email}}">
-                        <input type="hidden" name="admin" id="inputAdmin1" value="True">
-                        <button type="submit" class="btn btn-success">Promouvoir</button>
+            <tr>
+                <th scope="row">{{user.id}}</th>
+                <td class="lead">{{user.username}}</td>
+                <td class="lead">{{user.email}}</td>
+                <td>
+                    <!-- Actions possibles -->
+                    <form action="{{ url_for('admin.destroy', user_id=user.id) }}"
+                          method="GET">
+                        <a href="{{ url_for('admin.show', user_id=user.id) }}"
+                            class="btn btn-outline-success"
+                            role="button">
+                                Informations
+                        </a>
+                        <a href="{{ url_for('admin.update', user_id=user.id) }}"
+                            class="btn btn-outline-primary"
+                            role="button">
+                                Modifier
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger">Supprimer</button>
                     </form>
-                {% endif %}
-            </td>
-        </tr>
+                </td>
+                <td class="lead">
+                    {% if user.admin %}
+                        <i class="bi bi-check-circle"></i>
+                    {% else %}
+                        <!-- Promouvoir un utilisateur au rang d'administrateur -->
+                        <form action="{{ url_for('admin.update', user_id = user.id) }}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="username" id="inputUsername" value="{{user.username}}">
+                            <input type="hidden" name="email" id="inputEmail" value="{{user.email}}">
+                            <input type="hidden" name="admin" id="inputAdmin1" value="True">
+                            <button type="submit" class="btn btn-success">Promouvoir</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
     </tbody>
-  </table>
+</table>
 
 {% endblock %}

@@ -9,7 +9,7 @@
         <a class="btn btn-primary" href="{{ url_for('admin.posts') }}"> Retour</a>
     </div>
 </div>
-
+<!-- Formulaire création article -->
 <form action="{{ url_for('admin.storePost') }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Titre de l'article : </label>
@@ -26,6 +26,10 @@
                 <option value='{{category.id}}'>{{category.name}}</option>
             {% endfor %}
         </select>
+    </div>
+    <!-- Pour créer une nouvelle catégorie -->
+    <div class="mb-3">
+        <label for="category" class="form-label">Nouvelle catégorie : </label>
         <input type="text" name="category" class="form-control" id="inputCategory">
     </div>
     <button type="submit" class="btn btn-success">Valider</button>

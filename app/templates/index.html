@@ -1,41 +1,49 @@
+<!--
+Page principale, accessible par tout le monde mais évolue selon notre grade
+-->
+
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
+    <!-- Filtrer par catégorie -->
     <form action="{{ url_for('default.index') }}" method="GET" enctype="multipart/form-data">
             <button type="submit" class="btn btn-secondary" name="category">Tout</button>
         {% for category in categorys %}
             <button type="submit" class="btn btn-secondary" value="{{category.id}}" name="category">{{category.name}}</button>
         {% endfor %}
     </form>
+    <!-- Liste des articles -->
     {% for post in posts %}
-    {% if post.category_id == category_id or category_id == None %}
-        <div style="background-color: white; border-radius: 12px; border: 1px solid lightgray; margin: 3% auto; padding: 5%;">
-            <div>
-                <h1>{{post.title}}</h1>
-                <p>publié le {{post.pub_date}} </p>
-                <p style="font-size: 2rem;">{{post.body}}</p>
-            </div>
-            <div>
-                <h2>Commentaires :</h2>
-                {% for comm in comments %}
-                    {% if comm.post_id == post.id %}
-                        <div style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
-                            <p style="padding-left: 15px; margin: 3px"><strong>{{comm.user}}</strong> : {{comm.commentaire}}</p>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                {% if current_user.is_authenticated %}
-                    <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="idPost" value="{{post.id}}">
-                            <div style="display: flex;">
-                                <input type="text" name="commentaire" class="form-control" id="inputCommentaire" style="margin-right: 10px;">
-                                <button type="submit" class="btn btn-primary">Commenter</button>
+        {% if post.category_id == category_id or category_id == None %}
+            <div style="background-color: white; border-radius: 12px; border: 1px solid lightgray; margin: 3% auto; padding: 5%;">
+                <div>
+                    <h1>{{post.title}}</h1>
+                    <p>publié le {{post.pub_date}} </p>
+                    <p style="font-size: 2rem;">{{post.body}}</p>
+                </div>
+                <div>
+                    <h2>Commentaires :</h2>
+                    <!-- Liste des commentaires de l'article -->
+                    {% for comm in comments %}
+                        {% if comm.post_id == post.id %}
+                            <div style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
+                                <p style="padding-left: 15px; margin: 3px"><strong>{{comm.user}}</strong> : {{comm.commentaire}}</p>
                             </div>
-                    </form>
-                {% endif %}
-           </div>
-        </div>
-    {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if current_user.is_authenticated %}
+                        <!-- Formulaire pour ajouter un commentaire -->
+                        <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="idPost" value="{{post.id}}">
+                                <div style="display: flex;">
+                                    <input type="text" name="commentaire" class="form-control" id="inputCommentaire" style="margin-right: 10px;">
+                                    <button type="submit" class="btn btn-primary">Commenter</button>
+                                </div>
+                        </form>
+                    {% endif %}
+               </div>
+            </div>
+        {% endif %}
     {% endfor %}
 
 {% endblock %}

@@ -1,8 +1,11 @@
-# Models et ORM avec SQLAlchemy
+##Aymeric BACHELET (BACA24060106) et Tom PIERRE ()
 
-Ce projet est basé sur les exemples présentés dans le cours 6. Suivez les instructions ci-dessous pour l'installer sur votre ordinateur. 
+- Les articles, catégories et commentaires présents actuellement dans la base de données sont des textes "lorem ipsum" générés, ils n'ont aucune signification, ils sont là pour dnner une idée de la forme de l'application remplie.
+- 
 
-## Conditions préalables:
+
+Les instructions pour lancer le projet correctement qui nous ont été données pour la base de cette application :
+#### Conditions préalables:
 
 Vous devez avoir déjà installé :
 
@@ -10,7 +13,7 @@ Vous devez avoir déjà installé :
 - pip
 - virtualenv
 
-## Mise en place du projet
+#### Mise en place du projet
 
 1. Décompressez le fichier
 2. Allez dans le dossier du projet et installez un dossier d'environnement virtuel : 
@@ -30,7 +33,7 @@ source .venv/bin/activate (linux)
 pip install -r requirements.txt
 ```
 
-## Pour déployer la base de données
+#### Pour déployer la base de données
 
 En utilisant Shell (linux ou Mac) ou CMD (windows), tapez les commandes suivantes :
 
@@ -40,7 +43,7 @@ $ flask db migrate -m “Initial migration.”
 $ flask db upgrade
 ```
 
-## Pour remplir la base de données :
+#### Pour remplir la base de données :
 
 Pour que nous ayons des données avec lesquelles nous pouvons effectuer certaines tâches, exécutez le script ci-dessous en utilisant le shell de votre système :
 
@@ -48,7 +51,7 @@ Pour que nous ayons des données avec lesquelles nous pouvons effectuer certaine
 $ python populate_db.py 
 ```
 
-## Pour exécuter le projet :
+#### Pour exécuter le projet :
 
 exécutez la commande suivante dans votre terminal. Une autre option consiste à l'exécuter à partir de Visual Studio en cliquant sur l'icône "Play". Remarque : n'oubliez pas de vérifier l'interpréteur python installé dans votre environnement virtuel.
 
@@ -62,52 +65,7 @@ ou
 python run.py
 ```
 
-## Structure des répertoires de projet :
-
-.
-├── app
-│   ├── blueprints
-│   │   ├── default.py
-│   │   └── __init__.py
-│   ├── controllers
-│   │   ├── default_controller.py
-│   │   ├── __init__.py
-│   │   └── user_controller.py
-│   ├── ext
-│   │   ├── appearance.py
-│   │   ├── database.py
-│   │   ├── __init__.py
-│   │   ├── login.py
-│   │   └── migration.py
-│   ├── __init__.py
-│   ├── models
-│   │   ├── forms.py
-│   │   ├── __init__.py
-│   │   └── tables.py
-│   ├── static
-│   │   └── app.js
-│   ├── storage.db
-│   └── templates
-│       ├── base.html
-│       ├── create_user.html
-│       ├── index.html
-│       ├── list_users.html
-│       ├── login.html
-│       ├── show_user.html
-│       └── update_user.html
-├── config.py
-├── populate_db.py
-├── README.md
-├── requirements.txt
-├── run.py
-└── tests
-    ├── conftest.py
-    ├── __init__.py
-    ├── test_app.py
-    ├── test_exemple.py
-    ├── test_user_controller.py
-    └── test_user.py
-
+#### Structure des répertoires de projet :
 
 Le dossier **blueprints** contient le fichier default.py qui définit deux blueprints : default et users. Le blueprint 'users' crée les routes pour le CRUD d'utilisateur (créer, lire, mettre à jour et supprimer l'utilisateur). Le blueprint 'default' crée la route d'index (page d'accueil) et les routes de connexion et de déconnexion.
 

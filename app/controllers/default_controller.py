@@ -6,6 +6,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.security import check_password_hash
 from app.ext.database import db
 
+
+#Controller HomePage
 def index():
     categorys = Category.query.all()
     posts = Post.query.all()
@@ -15,8 +17,11 @@ def index():
         category_id = None
     else :
         category_id = int(category)
-
     return render_template('index.html', posts=posts, comments=comments, categorys=categorys, category_id=category_id)
+
+# ------------------------------------------------------
+#               Controllers Connexion
+# ------------------------------------------------------
 
 def login():
     form = LoginForm()
@@ -37,10 +42,13 @@ def login():
         
     return render_template("login.html", form = form)
 
-
 def logout():
     logout_user()
     return redirect('/')
+
+# ------------------------------------------------------
+#               Controllers Comments
+# ------------------------------------------------------
 
 @login_required
 def storeComment():

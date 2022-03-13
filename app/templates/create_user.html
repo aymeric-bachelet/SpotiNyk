@@ -9,7 +9,7 @@
         <a class="btn btn-primary" href="{{ url_for('admin.users') }}"> Retour</a>
     </div>
 </div>
-
+<!-- Formulaire de création d'un utilisateur -->
 <form action="{{ url_for('admin.store') }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -23,7 +23,6 @@
         <label for="password" class="form-label">Mot de passe</label>
         <input type="password" name="password" class="form-control" id="inputPassword">
     </div>
-
     <button type="submit" class="btn btn-success">Valider</button>
 </form>
 

@@ -9,6 +9,7 @@
         <a class="btn btn-primary mt-5" href="{{url_for('admin.users')}}"> Retour</a>
     </div>
 </div>
+<!-- Affichage des informations de l'utilisateur -->
 <div class="row">
     <div class="col lead">
         <h2><strong>Identifiant : </strong> {{user.username}}
@@ -23,6 +24,7 @@
         <p><strong>Mail:</strong> {{user.email}}</p>
     </div>
 </div>
+<!-- Affichage des commentaires écrits par l'utilisateur -->
 <div>
     <h3>Commentaires :</h3>
     {% for comment in comments %}
@@ -39,6 +41,7 @@
                             role="button">
                                 Voir l'article
                         </a>
+                        <!-- Supprimer un commentaire -->
                         <button type="submit" class="btn btn-outline-danger">Supprimer</button>
                     </form>
                 </div>
@@ -46,6 +49,7 @@
         {% endif %}
     {% endfor %}
 </div>
+<!-- Actions possibles -->
 <h3>Actions : </h3>
 <form action="{{ url_for('admin.destroy', user_id=user.id) }}"
                       method="GET">
