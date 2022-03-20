@@ -1,4 +1,4 @@
-##Aymeric BACHELET (BACA24060106) et Tom PIERRE ()
+##Aymeric BACHELET (BACA24060106) et Tom PIERRE (PIET08110102)
 
 - Les articles, catégories et commentaires présents actuellement dans la base de données sont des textes "lorem ipsum" générés, ils n'ont aucune signification, ils sont là pour dnner une idée de la forme de l'application remplie.
 - 
