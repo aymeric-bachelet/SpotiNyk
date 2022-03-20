@@ -6,37 +6,41 @@
         <h1 class="mt-5">Informations sur l'utilisateur</h1>
     </div>
     <div class="col text-end">
-        <a class="btn btn-primary mt-5" href="{{url_for('admin.users')}}"> Retour</a>
+        <a class="btn btn-primary mt-5" href="javascript:history.go(-1)"> Retour</a>
     </div>
 </div>
 <!-- Affichage des informations de l'utilisateur -->
 <div class="row">
     <div class="col lead">
-        <h2><strong>Identifiant : </strong> {{user.username}}
-        {% if user.admin %}
+        <h2><strong>Identifiant : </strong> {{usager.username}}
+        {% if usager.profil_id == 1 %}
             <span class="badge rounded-pill bg-primary">Administrateur</span>
+        {% elif usager.profil_id == 2 %}
+            <span class="badge rounded-pill bg-primary">Auteur</span>
+        {% elif usager.profil_id == 0 %}
+            <span class="badge rounded-pill bg-primary">Lecteur</span>
         {% endif %}
         </h2>
     </div>
 </div>
 <div class="row">
     <div class="col lead">
-        <p><strong>Mail:</strong> {{user.email}}</p>
+        <p><strong>Mail:</strong> {{usager.email}}</p>
     </div>
 </div>
 <!-- Affichage des commentaires écrits par l'utilisateur -->
 <div>
     <h3>Commentaires :</h3>
-    {% for comment in comments %}
-        {% if comment.user_id == user.id %}
+    {% for commentaire in commentaires %}
+        {% if commentaire.usager_id == usager.id %}
             <div class="row" style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
                 <div class="col">
-                    <p style="padding-left: 15px; margin: 3px"><strong>{{comment.post}}</strong> : {{comment.commentaire}}</p>
+                    <p style="padding-left: 15px; margin: 3px">Dans : <strong>{{commentaire.article}}</strong> : {{commentaire.description}}</p>
                 </div>
                 <div class="col text-end">
-                    <form action="{{ url_for('admin.destroyCommentUser', comment_id=comment.idComm) }}"
+                    <form action="{{ url_for('admin.destroyCommentaireUsager', commentaire_id=commentaire.id) }}"
                                         method="GET">
-                        <a href="{{ url_for('admin.showPost', post_id=comment.post_id) }}"
+                        <a href="{{ url_for('admin.showArticle', article_id=commentaire.article_id) }}"
                             class="btn btn-outline-success"
                             role="button">
                                 Voir l'article
@@ -51,9 +55,9 @@
 </div>
 <!-- Actions possibles -->
 <h3>Actions : </h3>
-<form action="{{ url_for('admin.destroy', user_id=user.id) }}"
+<form action="{{ url_for('admin.destroyUsager', usager_id=usager.id) }}"
                       method="GET">
-    <a href="{{ url_for('admin.update', user_id=user.id) }}"
+    <a href="{{ url_for('admin.updateUsager', usager_id=usager.id) }}"
         class="btn btn-outline-primary"
         role="button">
             Modifier l'utilisateur

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Articles{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Informations sur l'article</h1>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-primary mt-5" href="javascript:history.go(-1)"> Retour</a>
+    </div>
+</div>
+<!-- Affichage des informations de l'article -->
+<div class="row">
+    <div class="col lead">
+        <h2><strong>Titre : </strong> {{article.title}}</h2>
+    </div>
+</div>
+{% if current_user.profil_id == 1 %}
+<div class="row">
+    <div class="col lead">
+        <h2><strong>Auteur : </strong> {{article.usager}}</h2>
+    </div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col lead">
+        <p>{{article.text}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col lead">
+        <p><strong>Date de publication : </strong> {{article.date_publication}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col lead">
+        <p><strong>Dernière révision : </strong> {{article.date_revision}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col lead">
+        <p><strong>Catégorie : </strong> {{article.article_balise}}</p>
+    </div>
+</div>
+<!-- Affichage des commentaires de l'article -->
+<div>
+    <h3>Commentaires :</h3>
+    {% for commentaire in commentaires %}
+        {% if commentaire.article_id == article.id %}
+            <div class="row" style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
+                <div class="col">
+                    <p style="padding-left: 15px; margin: 3px"><strong>{{commentaire.usager}}</strong> : {{commentaire.description}}</p>
+                </div>
+                {% if current_user.profil_id == 1 %}
+                    <div class="col text-end">
+                        <form action="{{ url_for('admin.destroyCommentaireArticle', commentaire_id=commentaire.id) }}"
+                                            method="GET">
+                            <a href="{{ url_for('admin.showUsager', usager_id=commentaire.usager_id) }}"
+                                class="btn btn-outline-success"
+                                role="button">
+                                    Voir l'utilisateur
+                            </a>
+                            <!-- Supprimer le commentaire -->
+                            <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<!-- Actions possibles -->
+<h3>Actions : </h3>
+<form action="{{ url_for('admin.destroyArticle', article_id=article.id) }}"
+                      method="GET">
+    {% if article.statut != 1 %}
+        <a href="{{ url_for('admin.publishArticle', article_id=article.id) }}"
+            class="btn btn-outline-success"
+            role="button">
+                Publier l'article
+        </a>
+    {% endif %}
+    <a href="{{ url_for('admin.updateArticle', article_id=article.id) }}"
+        class="btn btn-outline-primary"
+        role="button">
+            Modifier l'article
+    </a>
+    <button type="submit" class="btn btn-outline-danger">Supprimer l'article</button>
+</form>
+
+{% endblock %}

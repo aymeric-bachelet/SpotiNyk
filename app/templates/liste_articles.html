@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Posts list{% endblock %}
+{% block title %}Liste des articles{% endblock %}
 {% block content %}
 {% with messages = get_flashed_messages() %} 
     {% if messages %}
@@ -15,12 +15,10 @@
 
 <div class="row">
     <div class="col">
-        <h1 class="mt-5">Liste d'articles</h1>
+        <h1 class="mt-5">Liste des articles</h1>
     </div>
     <div class="col text-end">
-        {# La fonction url_for génère le lien vers une certaine ressource, 
-            comme dans ce cas vers la route d'index du blueprint 'users'#}
-        <a class="btn btn-primary mt-5" href="{{url_for('admin.createPost')}}"> Créer un nouvel article</a>
+        <a class="btn btn-primary mt-5" href="{{url_for('admin.createArticle')}}"> Créer un nouvel article</a>
     </div>
 </div>
 <!-- Tableau de tous les articles -->
@@ -30,27 +28,37 @@
             <th scope="col">#</th>
             <th scope="col">Titre</th>
             <th scope="col">Date de publication</th>
+            <th scope="col">Date de révision</th>
+            <th scope="col">Statut</th>
             <th scope="col">Catégorie</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
-        {% for post in posts %}
+        {% for article in articles %}
             <tr>
-                <th scope="row">{{post.id}}</th>
-                <td class="lead">{{post.title}}</td>
-                <td class="lead">{{post.pub_date}}</td>
-                <td class="lead">{{post.category}}</td>
+                <th scope="row">{{article.id}}</th>
+                <td class="lead">{{article.title}}</td>
+                <td class="lead">{{article.date_publication}}</td>
+                <td class="lead">{{article.date_revision}}</td>
+                <td class="lead">
+                    {% if article.statut == 1 : %}
+                        Publié
+                    {% else %}
+                        Brouillon
+                    {% endif %}
+                </td>
+                <td class="lead">{{article.article_balise}}</td>
                 <td>
                     <!-- Actions possibles -->
-                    <form action="{{ url_for('admin.destroyPost', post_id=post.id) }}"
+                    <form action="{{ url_for('admin.destroyArticle', article_id=article.id) }}"
                           method="GET">
-                        <a href="{{ url_for('admin.showPost', post_id=post.id) }}"
+                        <a href="{{ url_for('admin.showArticle', article_id=article.id) }}"
                             class="btn btn-outline-success"
                             role="button">
                                 Informations
                         </a>
-                        <a href="{{ url_for('admin.updatePost', post_id=post.id) }}"
+                        <a href="{{ url_for('admin.updateArticle', article_id=article.id) }}"
                             class="btn btn-outline-primary"
                             role="button">
                                 Modifier

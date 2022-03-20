@@ -38,13 +38,19 @@ Barre de navigation située en haut du site, présente sur toutes les pages
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{url_for('default.index')}}"> <i class="bi bi-house"></i></a>
                             </li>
-                            <!-- visible seulement quand on est connecté -->
-                            {% if current_user.admin %}
+                            <!-- visible seulement quand on est administrateur -->
+                            {% if current_user.profil_id == 1 %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('admin.users')}}">Utilisateurs</a>
+                                <a class="nav-link" href="{{url_for('admin.usagers')}}">Utilisateurs</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('admin.posts')}}">Articles</a>
+                                <a class="nav-link" href="{{url_for('admin.articles')}}">Articles</a>
+                            </li>
+                            {%endif%}
+                            <!-- visible seulement quand on est auteur -->
+                            {% if current_user.profil_id == 2 %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('auteur.articles')}}">Mes articles</a>
                             </li>
                             {%endif%}
                         </ul>
@@ -62,6 +68,9 @@ Barre de navigation située en haut du site, présente sur toutes les pages
                             {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url_for('default.login')}}">Se connecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('default.signin')}}">Créer un compte</a>
                             </li>
                             {%endif%}
                         </ul>

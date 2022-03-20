@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Ajouter un utilisateur{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Ajouter un nouvel utilisateur</h1>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-primary" href="javascript:history.go(-1)"> Retour</a>
+    </div>
+</div>
+<!-- Formulaire de création d'un utilisateur -->
+<form action="{{ url_for('admin.storeUsager') }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" id="inputUsername">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="inputEmail">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" name="password" class="form-control" id="inputPassword">
+    </div>
+    <button type="submit" class="btn btn-success">Valider</button>
+</form>
+
+{% endblock %}

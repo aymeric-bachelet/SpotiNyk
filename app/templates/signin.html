@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Ajouter un utilisateur{% endblock %}
+{% block title %}Créer un compte{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col">
-        <h1 class="mt-5">Ajouter un nouveau utilisateur</h1>
+        <h1 class="mt-5">Créer un compte</h1>
     </div>
     <div class="col text-end">
-        <a class="btn btn-primary" href="{{ url_for('admin.users') }}"> Retour</a>
+        <a class="btn btn-primary" href="{{ url_for('default.index') }}"> Retour</a>
     </div>
 </div>
 <!-- Formulaire de création d'un utilisateur -->
-<form action="{{ url_for('admin.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ url_for('default.storeLecteur') }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" name="username" class="form-control" id="inputUsername">

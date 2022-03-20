@@ -1,5 +1,5 @@
 import flask
-from app.models.tables import User, Post, Comment, Category
+from app.models.tables import Usagers, Articles, Commentaires, Balises, ArticleBalise, Reactions, ArticleReaction
 from app.models.forms import LoginForm
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -9,15 +9,17 @@ from app.ext.database import db
 
 #Controller HomePage
 def index():
-    categorys = Category.query.all()
-    posts = Post.query.all()
-    comments = Comment.query.all()
-    category = request.values.get('category')
-    if category is None or category =="":
-        category_id = None
+    articles = Articles.query.all()
+    balises = Balises.query.all()
+    commentaires = Commentaires.query.all()
+    article_reaction = ArticleReaction.query.all()
+    article_balise = ArticleBalise.query.all()
+    balise = request.values.get('balise')
+    if balise is None or balise =="":
+        balise_id = None
     else :
-        category_id = int(category)
-    return render_template('index.html', posts=posts, comments=comments, categorys=categorys, category_id=category_id)
+        balise_id = int(balise)
+    return render_template('index.html', articles=articles, commentaires=commentaires, article_reaction=article_reaction, article_balise=article_balise, balises=balises, balise_id=balise_id)
 
 # ------------------------------------------------------
 #               Controllers Connexion
@@ -28,35 +30,64 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         passwd = form.password.data
-        user = User.query.filter_by(username=username).first()
+        usager = Usagers.query.filter_by(username=username).first()
         next = flask.request.args.get("next")
-        if user and check_password_hash(user.password, passwd):
-            login_user(user)
-            flash('Logged in successfully.')
+        if usager and check_password_hash(usager.password, passwd):
+            login_user(usager)
+            flash('Connexion réussie')
             #print("next: " + next)
         else:
-            flash('Invalid login.')
-            print("invalid login")
-        
-        return flask.redirect(next or flask.url_for('default.index')) 
-        
+            flash('Connexion invalide')
+            print("Connexion invalide")
+        return flask.redirect(next or flask.url_for('default.index'))
     return render_template("login.html", form = form)
 
 def logout():
     logout_user()
     return redirect('/')
 
+def signin():
+    return render_template('signin.html')
+
+def storeLecteur():
+    username = request.values.get('username')
+    email = request.values.get('email')
+    password = request.values.get('password')
+    profil_id = 0
+    new_usager = Usagers(username=username, email=email, password=password, profil_id=profil_id)
+    db.session.add(new_usager)
+    db.session.commit()
+    flash('Utilisateur enregistré!')
+    return redirect(url_for('default.login'))
+
 # ------------------------------------------------------
 #               Controllers Comments
 # ------------------------------------------------------
 
 @login_required
-def storeComment():
-    post_id = int(request.values.get('idPost'))
-    commentaire = request.values.get('commentaire')
-    user_id = current_user.id
-    new_comment = Comment(post_id=post_id, commentaire=commentaire, user_id=user_id)
-    db.session.add(new_comment)
+def storeCommentaire():
+    article_id = int(request.values.get('article_id'))
+    description = request.values.get('description')
+    usager_id = current_user.id
+    new_commentaire = Commentaires(article_id=article_id, description=description, usager_id=usager_id)
+    db.session.add(new_commentaire)
+    db.session.commit()
+    flash('Commentaire enregistré!')
+    return redirect(url_for('default.index'))
+
+# ------------------------------------------------------
+#               Controllers Reactions
+# ------------------------------------------------------
+
+@login_required
+def storeReaction():
+    article_id = int(request.values.get('article_id'))
+    usager_id = current_user.id
+    reaction_id = int(request.values.get('reaction_id'))
+    old_article_reaction = ArticleReaction.query.filter(article_id==article_id, usager_id==usager_id).first()
+    article_reaction = ArticleReaction(article_id=article_id, usager_id=usager_id, reaction_id=reaction_id)
+    db.session.delete(old_article_reaction)
+    db.session.add(article_reaction)
     db.session.commit()
     flash('Commentaire enregistré!')
     return redirect(url_for('default.index'))

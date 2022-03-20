@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Mettre à jour l'utilisateur{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="mt-5">Mettre à jour l'utilisateur</h1>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-primary" href="javascript:history.go(-1)"> Retour</a>
+    </div>
+</div>
+<!-- Formulaire de mise a jour de l'utilisateur -->
+<form action="{{ url_for('admin.updateUsager', usager_id = usager.id) }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" id="inputUsername" value="{{usager.username}}">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="inputEmail" value="{{usager.email}}">
+    </div>
+    <div class="mb-3">
+        <label class="form-check-label" for="profil_id">Administrateur</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="profil_id" id="inputAdmin1" value="0">
+            <label class="form-check-label" for="inlineRadio1">Lecteur</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="profil_id" id="inputAdmin2" value="1">
+            <label class="form-check-label" for="inlineRadio2">Administrateur</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="profil_id" id="inputAdmin3" value="2">
+            <label class="form-check-label" for="inlineRadio3">Auteur</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Valider</button>
+</form>
+
+{% endblock %}

@@ -7,43 +7,68 @@ Page principale, accessible par tout le monde mais évolue selon notre grade
 {% block content %}
     <!-- Filtrer par catégorie -->
     <form action="{{ url_for('default.index') }}" method="GET" enctype="multipart/form-data">
-            <button type="submit" class="btn btn-secondary" name="category">Tout</button>
-        {% for category in categorys %}
-            <button type="submit" class="btn btn-secondary" value="{{category.id}}" name="category">{{category.name}}</button>
+            <button type="submit" class="btn btn-secondary" name="balise">Tout</button>
+        {% for balise in balises %}
+            <button type="submit" class="btn btn-secondary" value="{{balise.id}}" name="balise">{{balise.description}}</button>
         {% endfor %}
     </form>
     <!-- Liste des articles -->
-    {% for post in posts %}
-        {% if post.category_id == category_id or category_id == None %}
-            <div style="background-color: white; border-radius: 12px; border: 1px solid lightgray; margin: 3% auto; padding: 5%;">
-                <div>
-                    <h1>{{post.title}}</h1>
-                    <p>publié le {{post.pub_date}} </p>
-                    <p style="font-size: 2rem;">{{post.body}}</p>
-                </div>
-                <div>
-                    <h2>Commentaires :</h2>
-                    <!-- Liste des commentaires de l'article -->
-                    {% for comm in comments %}
-                        {% if comm.post_id == post.id %}
-                            <div style="border: 1px solid lightgray; border-radius: 10px; margin: 1%;">
-                                <p style="padding-left: 15px; margin: 3px"><strong>{{comm.user}}</strong> : {{comm.commentaire}}</p>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    {% if current_user.is_authenticated %}
-                        <!-- Formulaire pour ajouter un commentaire -->
-                        <form action="{{ url_for('default.storeComment') }}" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="idPost" value="{{post.id}}">
-                                <div style="display: flex;">
-                                    <input type="text" name="commentaire" class="form-control" id="inputCommentaire" style="margin-right: 10px;">
-                                    <button type="submit" class="btn btn-primary">Commenter</button>
+    {% for article in articles %}
+        {% if article.statut == 1 %}
+            {% for articleBalise in article_balise %}
+                {% if articleBalise.article_id == article.id and (articleBalise.balise_id == balise_id or balise_id == None) %}
+                    <div style="background-color: white; border-radius: 12px; border: 1px solid lightgray; margin: 3% auto; padding: 5%;">
+                        <div>
+                            <div class="row">
+                                <div class="col">
+                                    <h1>{{article.title}}</h1>
                                 </div>
-                        </form>
-                    {% endif %}
-               </div>
-            </div>
+                                <div class="col text-end">
+                                    <h3></h3>
+                                </div>
+                            </div>
+                            <h2>{{article.usager}}</h2>
+                            <p>publié le {{article.date_publication}}, révisé le {{article.date_revision}}</p>
+                            <p style="font-size: 2rem;">{{article.text}}</p>
+                        </div>
+                        <div>
+                            <h2>Commentaires :</h2>
+                            <!-- Liste des commentaires de l'article -->
+                            {% for commentaire in commentaires %}
+                                {% if commentaire.article_id == article.id %}
+                                    <div style="border: 1px solid lightgray; border-radius: 10px; margin: 1%; padding: 0.5%;" class="row">
+                                        <div class="col-8"><strong>{{commentaire.usager}} : </strong>{{commentaire.description}}</div>
+                                        <div class="col text-end">{{commentaire.date_publication}}</div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-10">
+                                    {% if current_user.is_authenticated %}
+                                        <!-- Formulaire pour ajouter un commentaire -->
+                                        <form action="{{ url_for('default.storeCommentaire') }}" method="POST" enctype="multipart/form-data">
+                                            <input type="hidden" name="article_id" value="{{article.id}}">
+                                            <div style="display: flex;">
+                                                <input type="text" name="description" class="form-control" id="inputCommentaire" style="margin-right: 10px;">
+                                                <button type="submit" class="btn btn-primary">Commenter</button>
+                                            </div>
+                                        </form>
+                                </div>
+                                <div class="col text-center">
+                                        <form action="{{ url_for('default.storeReaction') }}" method="POST" enctype="multipart/form-data">
+                                            <input type="hidden" name="article_id" value="{{article.id}}">
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" type="submit" name="reaction_id" value="1"><img src="/static/like_vide.png" alt="aimer" style="width: 20px;"></button>
+                                                <button class="btn btn-outline-primary" type="submit" name="reaction_id" value="2"><img alt="applaudir" style="width: 20px;" src="/static/bravo_vide.png"></button>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
     {% endfor %}
-
 {% endblock %}
