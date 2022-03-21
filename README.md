@@ -1,7 +1,15 @@
 ##Aymeric BACHELET (BACA24060106) et Tom PIERRE (PIET08110102)
 
 - Les articles, catégories et commentaires présents actuellement dans la base de données sont des textes "lorem ipsum" générés, ils n'ont aucune signification, ils sont là pour dnner une idée de la forme de l'application remplie.
-- 
+- Il y a actuellement 3 comptes de créés :
+  - administrateur (mot de passe : administrateur)
+  - auteur (mot de passe : auteur)
+  - lecteur (mot de passe : lecteur)
+
+- Les personnes non connectées peuvent seulement voir les articles publiés (même par catégorie)
+- les lecteurs peuvent ajouter des commentaires et des réactions
+- les auteur peuvent créer des articles, modifier, supprimer et publié leurs articles
+- les administrateurs peuvent gérer tous les utilisateurs (créer modifier et supprimmer), de même avec les articles qui sont publiés et les commentaires.
 
 
 Les instructions pour lancer le projet correctement qui nous ont été données pour la base de cette application :

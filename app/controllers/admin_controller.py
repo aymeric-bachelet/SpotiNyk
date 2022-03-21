@@ -1,4 +1,4 @@
-from app.models.tables import Usagers, Articles, Commentaires, Balises, ArticleBalise
+from app.models.tables import Usagers, Articles, Commentaires, Balises, ArticleBalise, ArticleReaction
 from flask import render_template, request, redirect, url_for, flash
 from app.ext.database import db
 from flask_login import login_required, current_user
@@ -163,6 +163,10 @@ def destroyArticle(article_id):
             destroyCommentaireArticle(commentaire.id)
     article = Articles.query.get_or_404(article_id)
     article_balise = ArticleBalise.query.filter(ArticleBalise.article_id == article_id).first()
+    article_reactions = ArticleReaction.query.all()
+    for article_reaction in article_reactions :
+        if article_reaction.article_id == article_id :
+            db.session.delete(article_reaction)
     db.session.delete(article_balise)
     db.session.delete(article)
     db.session.commit()

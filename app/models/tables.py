@@ -18,7 +18,7 @@ class ArticleBalise(db.Model):
     balise = db.relationship("Balises", back_populates="article_balise")
 
     def __repr__(self):
-        return str(repr(self.article) + " " + repr(self.balise))
+        return str(repr(self.balise))
 
 # ------------------------------------------------------
 #                      Model ArticleReaction
