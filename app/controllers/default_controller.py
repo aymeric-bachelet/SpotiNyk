@@ -84,9 +84,10 @@ def storeReaction():
     article_id = int(request.values.get('article_id'))
     usager_id = current_user.id
     reaction_id = int(request.values.get('reaction_id'))
-    old_article_reaction = ArticleReaction.query.filter(article_id==article_id, usager_id==usager_id).first()
+    old_article_reaction = ArticleReaction.query.filter(ArticleReaction.article_id==article_id, ArticleReaction.usager_id==usager_id).first()
     article_reaction = ArticleReaction(article_id=article_id, usager_id=usager_id, reaction_id=reaction_id)
-    db.session.delete(old_article_reaction)
+    if old_article_reaction is not None :
+        db.session.delete(old_article_reaction)
     db.session.add(article_reaction)
     db.session.commit()
     flash('Commentaire enregistré!')
