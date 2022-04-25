@@ -10,16 +10,24 @@ from app.ext.database import db
 #Controller HomePage
 def index():
     articles = Articles.query.all()
+    article_lc = {}
+    for article in articles:
+        likes = db.session.query(ArticleReaction).filter(ArticleReaction.reaction_id == 1, ArticleReaction.article_id == article.id).count()
+        claps = db.session.query(ArticleReaction).filter(ArticleReaction.reaction_id == 2, ArticleReaction.article_id == article.id).count()
+
+        article_lc[article.id] = {}
+        article_lc[article.id]['likes'] = likes
+        article_lc[article.id]['claps'] = claps
+
     balises = Balises.query.all()
     commentaires = Commentaires.query.all()
-    article_reaction = ArticleReaction.query.all()
     article_balise = ArticleBalise.query.all()
     balise = request.values.get('balise')
     if balise is None or balise =="":
         balise_id = None
     else :
         balise_id = int(balise)
-    return render_template('index.html', articles=articles, commentaires=commentaires, article_reaction=article_reaction, article_balise=article_balise, balises=balises, balise_id=balise_id)
+    return render_template('index.html', articles=articles, commentaires=commentaires, article_balise=article_balise, balises=balises, balise_id=balise_id)
 
 # ------------------------------------------------------
 #               Controllers Connexion

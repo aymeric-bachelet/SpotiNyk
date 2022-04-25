@@ -62,6 +62,13 @@ class Usagers(db.Model):
     def __repr__(self):
         return '%r' % self.username
 
+    def to_json(self):
+        return {"id": self.id,
+                "username": self.username,
+                "email": self.email,
+                "password": self.password,
+                "profil_id": self.profil_id}
+
     def is_authenticated(self):
         return True
 
@@ -104,6 +111,15 @@ class Articles(db.Model):
 
     def __repr__(self):
         return '<Article %r>' % self.title
+
+    def to_json(self):
+        return {"id": self.id,
+                "title": self.title,
+                "text": self.text,
+                "date_publication": self.date_publication,
+                "date_revision": self.date_revision,
+                "statut": self.statut,
+                "auteur": self.usager.to_json()}
 
 
 # ------------------------------------------------------
